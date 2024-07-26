@@ -64,11 +64,8 @@
         d3.select(rects[ind]).style("fill", "white");
         data.map((x) => {x["md"] = Math.abs(x.row-row) + Math.abs(x.col-col)})
         actives.push(ind);
-        // pick a random destination for now
-        rind = (rows * cols - 1) * Math.round(Math.random())
-        destination = data[rind]
-        // if step is > k * manhattan distance, no longer add from edge.
-        for (i = 0; i < 2*destination.md; i++) {
+        // if step is > k, no longer add from edge.
+        for (i = 0; i < 40; i++) {
             //iterate over actives and add their neighbors to actives
             actives.map((active) => {
                 inds = [data[active].row*cols + data[active].col-1, data[active].row*cols + data[active].col+1, 
@@ -132,8 +129,8 @@
             .select(".domain").remove()
         // Build color scale
         var myColor = d3.scaleLinear()
-            .domain([0,1])
-            .range(["white", "rgb(1,1,1)"])
+            .domain([0,100])
+            .range(["rgb(1,1,1)", "white"])
         // add the squares
         svg.selectAll()
         .data(data, function(d) {return d.row+':'+d.col;})
